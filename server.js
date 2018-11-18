@@ -15,7 +15,15 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/nytreact");
+
+mongoose.Promise = global.Promise;
+// Connect to the Mongo DB
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/nytreact",
+  {
+     useNewUrlParser: true //added per command line deprecation warning
+  }
+);
 
 // Start the API server
 app.listen(PORT, function() {
